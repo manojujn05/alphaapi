@@ -10,6 +10,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const User = require("./user");
 const request = require('request');
+const path = require('path');
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
 mongoose.connect(
   "mongodb+srv://manoj:Laxyo@123@cluster0.ulbwp.mongodb.net/test?retryWrites=true&w=majority",
@@ -44,8 +45,12 @@ app.use(passport.session());
 require("./passportConfig")(passport);
 
 //----------------------------------------- END OF MIDDLEWARE---------------------------------------------------
-
+app.use(express.static(path.join(__dirname ,'/public')));
 // Routes
+app.get("/*", (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
+});
+
 app.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) throw err;
