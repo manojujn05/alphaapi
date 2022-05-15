@@ -24,7 +24,7 @@ export class LoginScreen extends Component {
                 username,
                 password
             },
-            url: "http://127.0.0.1/login",
+            url: "http://localhost:4000/login",
         }).then((res) => {
             console.log(res)
             window.localStorage.setItem("isAuthenticated", true);

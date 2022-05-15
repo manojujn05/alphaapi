@@ -23,7 +23,7 @@ export class RegisterScreen extends Component {
                 username,
                 password
             },
-            url: "http://127.0.0.1/register",
+            url: "http://localhost:4000/register",
         }).then((res) => {
             console.log(res)
             window.localStorage.setItem("isAuthenticated", true);
