@@ -12,16 +12,15 @@ const app = express();
 const request = require('request');
 const path = require('path');
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
-mongoose.connect(
-  "mongodb+srv://manoj:Laxyo@123@cluster0.ulbwp.mongodb.net/test?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  () => {
-    console.log("Mongoose Is Connected");
-  }
-);
+mongoose
+  .connect("mongodb+srv://manoj:Laxyo@123@cluster0.ulbwp.mongodb.net/test?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+  .then(() => console.log("Database connected!"))
+  .catch(err => console.log(err));
+
 const User = require("./user");
 // Middleware
 app.use(bodyParser.json());
@@ -45,7 +44,7 @@ app.use(passport.session());
 require("./passportConfig")(passport);
 
 //----------------------------------------- END OF MIDDLEWARE---------------------------------------------------
-app.use(express.static(path.join(__dirname ,'/public')));
+app.use(express.static(path.join(__dirname, '/public')));
 // Routes
 app.get("/*", (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
@@ -89,14 +88,14 @@ app.get("/user", (req, res) => {
 // Routes
 app.post("/stock", (req, res, next) => {
   let stock = req.body.stock;
-console.log(req.body.stock);
+  console.log(req.body.stock);
   request(`https://www.alphavantage.co/query?function=OVERVIEW&symbol=${stock}&apikey=Z0BM2IYIBVNVQDBP`, function (error, response, body) {
- // console.error('error:', error); // Print the error if one occurred
-  //console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-  const data = JSON.parse(body);
-  // console.log(data);
-  res.send(data);
-});
+    // console.error('error:', error); // Print the error if one occurred
+    //console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+    const data = JSON.parse(body);
+    // console.log(data);
+    res.send(data);
+  });
 
 
 });
