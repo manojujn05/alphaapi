@@ -8,7 +8,7 @@ const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const app = express();
-const User = require("./user");
+
 const request = require('request');
 const path = require('path');
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
@@ -22,7 +22,7 @@ mongoose.connect(
     console.log("Mongoose Is Connected");
   }
 );
-
+const User = require("./user");
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
