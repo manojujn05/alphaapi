@@ -3,7 +3,7 @@ import axios from "axios";
 import Search from './Search';
 import Profile from './Profile';
 import { Link } from "react-router-dom";
-const API = 'http://139.59.47.100/stock'
+const API = 'http://127.0.0.1:4000/stock'
 
 export class StockScreen extends Component {
     constructor(props) {
