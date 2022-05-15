@@ -17,6 +17,7 @@ export class LoginScreen extends Component {
 
     onLogin = (e) => {
         e.preventDefault();
+        let API = `http://139.59.47.100`;
         const { username, password } = this.state;
         axios({
             method: "POST",
@@ -24,7 +25,7 @@ export class LoginScreen extends Component {
                 username,
                 password
             },
-            url: "http://localhost:4000/login",
+            url: `${API}/login`,
         }).then((res) => {
             console.log(res)
             window.localStorage.setItem("isAuthenticated", true);

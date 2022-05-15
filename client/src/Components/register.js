@@ -13,6 +13,7 @@ export class RegisterScreen extends Component {
     };
 
     onSignup = (e) => {
+        let API = `http://139.59.47.100`;
         e.preventDefault();
         const { firstname, lastname, username, password } = this.state;
         axios({
@@ -23,7 +24,7 @@ export class RegisterScreen extends Component {
                 username,
                 password
             },
-            url: "http://localhost:4000/register",
+            url: `${API}/register`,
         }).then((res) => {
             console.log(res)
             window.localStorage.setItem("isAuthenticated", true);
