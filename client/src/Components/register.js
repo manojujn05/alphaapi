@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+const REGAPI = 'http://139.59.47.100/register'
+// const REGAPI = 'http://localhost:4000/register'
 export class RegisterScreen extends Component {
     state = {
         firstname: "",
@@ -13,7 +14,6 @@ export class RegisterScreen extends Component {
     };
 
     onSignup = (e) => {
-        let API = `http://139.59.47.100`;
         e.preventDefault();
         const { firstname, lastname, username, password } = this.state;
         axios({
@@ -24,7 +24,7 @@ export class RegisterScreen extends Component {
                 username,
                 password
             },
-            url: `${API}/register`,
+            url: `${REGAPI}`,
         }).then((res) => {
             console.log(res)
             window.localStorage.setItem("isAuthenticated", true);
@@ -57,19 +57,19 @@ export class RegisterScreen extends Component {
                             {error}
                             <div className="form-group">
                                 <label>First Name</label>
-                                <input  name="firstname" type="text" className="form-control" placeholder="Enter your first name" onChange={this.onChange} />
+                                <input  name="firstname" type="text" className="form-control" placeholder="Enter your first name" onChange={this.onChange} required/>
                             </div>
                             <div className="form-group">
                                 <label>Last Name</label>
-                                <input  name="lastname" type="text" className="form-control" placeholder="Enter your last name" onChange={this.onChange} />
+                                <input  name="lastname" type="text" className="form-control" placeholder="Enter your last name" onChange={this.onChange} required/>
                             </div>
                             <div className="form-group">
                                 <label>UserName</label>
-                                <input name="username" type="text" className="form-control" placeholder="Enter username" onChange={this.onChange}/>
+                                <input name="username" type="text" className="form-control" placeholder="Enter username" onChange={this.onChange} required/>
                             </div>
                             <div className="form-group">
                                 <label>Password</label>
-                                <input name="password" type="password" className="form-control" placeholder="Password" onChange={this.onChange} />
+                                <input name="password" type="password" className="form-control" placeholder="Password" onChange={this.onChange} required/>
                             </div>
                             <button type="submit" className="btn btn-primary">Submit</button>
                             <p className="mt-2">

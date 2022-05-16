@@ -4,6 +4,7 @@ import Search from './Search';
 import Profile from './Profile';
 import { Link } from "react-router-dom";
 const API = 'http://139.59.47.100/stock'
+// const API = 'http://localhost:4000/stock'
 
 export class StockScreen extends Component {
     constructor(props) {
@@ -45,6 +46,10 @@ export class StockScreen extends Component {
     componentDidMount() {
         this.getProfile(this.state.stock);
     }
+    logout() {
+        localStorage.clear();
+        window.location.href = '/login';
+    }
     render() {
         return (
             <div className="container mt-5">
@@ -56,7 +61,7 @@ export class StockScreen extends Component {
                 </div>
                 <div className="row d-flex justify-content-center">
                     <div className="col-md-6">
-                       <center><Link to={"/logout"}>Logout</Link> </center> 
+                       <center> <Link to="/logout" onClick={() => this.logout()}>Logout</Link> </center> 
                     </div>
                 </div>
             </div>

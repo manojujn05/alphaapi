@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+const LOGINAPI = 'http://139.59.47.100/login'
+// const LOGINAPI = 'http://localhost:4000/login'
 export class LoginScreen extends Component {
-    state = { username: "", password: "", success: false, error: false };
+    
 
     constructor(props) {
         super(props)
         let token = localStorage.getItem('isAuthenticated');
-        console.log(token);
+        this.state = { success: false, error: false };
         if (token) {
             console.log("You can't login if you are logged in!")
-            //  props.history.push("/stock");
+             props.history.push("/stock");
         }
     }
 
     onLogin = (e) => {
         e.preventDefault();
-        let API = `http://139.59.47.100`;
         const { username, password } = this.state;
         axios({
             method: "POST",
@@ -25,13 +25,16 @@ export class LoginScreen extends Component {
                 username,
                 password
             },
-            url: `${API}/login`,
+            url: `${LOGINAPI}`,
         }).then((res) => {
             console.log(res)
             window.localStorage.setItem("isAuthenticated", true);
             if (res.status === 200) {
                 this.setState({ success: true, error: false });
                 this.props.history.push("/stock");
+            }else{
+                this.setState({ success: false, error: true });
+                this.props.history.push("/login");
             }
         }).catch(({ response }) => {
             this.setState({ error: response.data.message, success: false });
@@ -48,22 +51,21 @@ export class LoginScreen extends Component {
     };
 
     render() {
-        const { error, success } = this.state;
         return (
             <div className="container mt-5">
                 <div className="row d-flex justify-content-center">
                     <div className="col-md-6">
-                        <h3><center>Register</center></h3>
+                        <h3><center>Login</center></h3>
                         <form onSubmit={this.onLogin}>
-                            {success && "You've logged in successfully"}
-                            {error}
+                            {this.state.success}
+                            {this.state.error}
                             <div className="form-group">
                                 <label>UserName</label>
-                                <input name="username" type="text" className="form-control" placeholder="Enter username" onChange={this.onChange} />
+                                <input name="username" type="text" className="form-control" placeholder="Enter username" onChange={this.onChange} required/>
                             </div>
                             <div className="form-group">
                                 <label>Password</label>
-                                <input name="password" type="password" className="form-control" placeholder="Password" onChange={this.onChange} />
+                                <input name="password" type="password" className="form-control" placeholder="Password" onChange={this.onChange} required/>
                             </div>
                             <button type="submit" className="btn btn-primary">Submit</button>
                             <p className="mt-2">

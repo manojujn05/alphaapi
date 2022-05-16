@@ -7,11 +7,9 @@ const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const bodyParser = require("body-parser");
-const app = express();
-
 const request = require('request');
 const path = require('path');
-//----------------------------------------- END OF IMPORTS---------------------------------------------------
+const app = express();
 mongoose
   .connect("mongodb+srv://manoj:Laxyo@123@cluster0.ulbwp.mongodb.net/test?retryWrites=true&w=majority",
     {
@@ -43,8 +41,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 require("./passportConfig")(passport);
 
-//----------------------------------------- END OF MIDDLEWARE---------------------------------------------------
 app.use(express.static(path.join(__dirname, '/public')));
+
 // Routes
 app.get("/*", (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
@@ -63,6 +61,7 @@ app.post("/login", (req, res, next) => {
     }
   })(req, res, next);
 });
+
 app.post("/register", (req, res) => {
   User.findOne({ username: req.body.username }, async (err, doc) => {
     if (err) throw err;
@@ -98,7 +97,6 @@ app.post("/stock", (req, res, next) => {
 
 });
 
-//----------------------------------------- END OF ROUTES---------------------------------------------------
 //Start Server
 app.listen(4000, () => {
   console.log("Server Has Started");
